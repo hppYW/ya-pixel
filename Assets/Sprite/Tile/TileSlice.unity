@@ -283,8 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ccf2772298e44ab85c8725a5d493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 0
-  MoveSpeed: 0
+  JumpForce: 3
+  MoveSpeed: 3
   rigid: {fileID: 0}
   isGrounded: 1
 --- !u!50 &1610479738
