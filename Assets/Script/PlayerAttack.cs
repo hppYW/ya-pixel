@@ -195,16 +195,25 @@ public class PlayerAttack : MonoBehaviour
         if (attackCollider != null)
         {
             float currentDamage = GetComboDamage(currentCombo);
-            
+
             PlayerAttackCollider colliderScript = attackCollider.GetComponent<PlayerAttackCollider>();
             if (colliderScript != null)
             {
+                Debug.Log("PlayerAttackCollider 스크립트 찾음!");
                 colliderScript.SetDamage(currentDamage);
                 colliderScript.StartAttack();
             }
-            
+            else
+            {
+                Debug.Log("PlayerAttackCollider 스크립트 못 찾음!");
+            }
+
             // 0.2초 후 비활성화
             Invoke(nameof(DeactivateAttackCollider), 0.2f);
+        }
+        else
+        {
+            Debug.Log("attackCollider가 null임!");
         }
     }
 

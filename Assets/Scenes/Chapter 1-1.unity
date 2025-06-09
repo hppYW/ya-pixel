@@ -615,7 +615,7 @@ MonoBehaviour:
   attackDamage: 25
   comboWindow: 1.5
   comboResetTime: 5
-  attackCollider: {fileID: 0}
+  attackCollider: {fileID: 1369018589}
   animator: {fileID: 163874874}
 --- !u!1 &237949518
 GameObject:
