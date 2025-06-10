@@ -63,6 +63,17 @@ public class PlayerStatus : MonoBehaviour
         // HP 바 UI 업데이트
         UpdateHealthUI();
 
+        // Hit 애니메이션 재생 (PlayerState 7번)
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetInteger("state", 7); // Hit 상태값 7
+            Debug.Log("Hit 애니메이션 재생!");
+            
+            // 0.5초 후 Idle로 돌아가기
+            Invoke(nameof(ResetHitAnimation), 0.7f);
+        }
+
         // 디버그 로그 출력
         Debug.Log($"플레이어가 {MonsterDamage} 데미지를 받았습니다. 현재 HP: {currentHP}");
 
@@ -72,22 +83,32 @@ public class PlayerStatus : MonoBehaviour
             PlayerDie();
         }
     }
+    
+    void ResetHitAnimation()
+{
+    Animator animator = GetComponent<Animator>();
+    if (animator != null)
+    {
+        animator.SetInteger("state", 0); // Idle로 돌아가기
+        Debug.Log("Hit 애니메이션 종료 - Idle로 복귀");
+    }
+}
 
     public void Heal(float healAmount)
     {
         // 죽은 상태에서는 회복 불가
         if (isDead) return;
-        
+
         // 현재 HP에 회복량 추가
         currentHP += healAmount;
-        
+
         // 최대 HP를 넘지 않도록 제한
         currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
-        
+
         // HP 바 UI 업데이트
         UpdateHealthUI();
-        
-        
+
+
         Debug.Log($"플레이어가 {healAmount} 회복했습니다. 현재 HP: {currentHP}");
     }
 

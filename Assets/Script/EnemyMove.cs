@@ -4,6 +4,14 @@ public enum State { Idle, Patrol, Chase, Attack, Dead }
 
 public class EnemyMove : MonoBehaviour
 {
+
+    [Header("References")]
+    [Tooltip("공격 콜라이더 오브젝트 (MonsterAttackCollider 스크립트가 붙은)")]
+    public GameObject attackCollider;
+    
+    [Tooltip("몬스터 애니메이터")]
+    public Animator animator;
+    public float attackDamage = 10f;
     public float hp = 100f;
     public float moveSpeed = 2f;
     Rigidbody2D rigid;
@@ -115,20 +123,29 @@ public class EnemyMove : MonoBehaviour
             Vector2 dir = (target.position - transform.position).normalized;
             spriteRenderer.flipX = dir.x > 0;
             anim.SetBool("isAttacking", isAttacking);
+            Invoke("ActivateMonsterAttack", 0.15f);
             Invoke("BackToChase", 0.25f);
         }
     }
 
     void ActivateMonsterAttack()
     {
-        MonsterAttackCollider attackCollider = GetComponentInChildren<MonsterAttackCollider>();
         if (attackCollider != null)
         {
-            attackCollider.SetDamage(10f); // 몬스터 공격력
-            attackCollider.StartAttack();
-            
-            // 0.2초 후 비활성화
-            Invoke("DeactivateMonsterAttack", 0.2f);
+            MonsterAttackCollider colliderScript = attackCollider.GetComponent<MonsterAttackCollider>();
+            if (colliderScript != null)
+            {
+                colliderScript.SetDamage(10f); // 몬스터 공격력
+                colliderScript.StartAttack();
+                Debug.Log("몬스터 공격 콜라이더 활성화!");
+                
+                // 0.2초 후 비활성화
+                Invoke("DeactivateMonsterAttack", 0.2f);
+            }
+        }
+        else
+        {
+            Debug.Log("attackCollider가 null임!");
         }
     }
 

@@ -8,8 +8,8 @@ public class MonsterAttackCollider : MonoBehaviour
 
     void Start()
     {
-        gameObject.SetActive(false); // 기본 비활성화
         isActive = true;
+        gameObject.SetActive(false); // 기본 비활성화
     }
 
     void OnTriggerEnter2D(Collider2D other)
